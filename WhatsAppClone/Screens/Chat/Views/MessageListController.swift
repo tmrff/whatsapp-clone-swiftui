@@ -39,6 +39,12 @@ final class MessageListController: UIViewController {
     private var subscriptions = Set<AnyCancellable>()
     private let cellIdentifier = "MessageListControllerCells"
     
+    private lazy var pullToRefresh: UIRefreshControl = {
+        let pullToRefresh = UIRefreshControl()
+        pullToRefresh.addTarget(self, action: #selector(refreshData), for: .valueChanged)
+        return pullToRefresh
+    }()
+    
     private let compositionaLayout = UICollectionViewCompositionalLayout { sectionIndex, layoutEnvironment in
         var listConfig = UICollectionLayoutListConfiguration(appearance: .plain)
         listConfig.backgroundColor = UIColor.gray.withAlphaComponent(0.2)
@@ -61,7 +67,7 @@ final class MessageListController: UIViewController {
         collectionView.keyboardDismissMode = .onDrag
         collectionView.backgroundColor = .clear
         collectionView.register(UICollectionViewCell.self, forCellWithReuseIdentifier: cellIdentifier)
-
+        collectionView.refreshControl = pullToRefresh
         return collectionView
     }()
     
@@ -104,6 +110,10 @@ final class MessageListController: UIViewController {
                     self?.messagesCollectionView.scrollToLastItem(at: .bottom, animated: scrollRequest.isAnimated)
                 }
             }.store(in: &subscriptions)
+    }
+    
+    @objc private func refreshData() {
+        messagesCollectionView.refreshControl?.endRefreshing()
     }
 }
 
