@@ -76,6 +76,7 @@
 		E9BDE69A2C19559000B5AC40 /* ChannelTabViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9BDE6992C19559000B5AC40 /* ChannelTabViewModel.swift */; };
 		E9BDE69D2C1AA7D500B5AC40 /* String+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9BDE69C2C1AA7D500B5AC40 /* String+Extensions.swift */; };
 		E9BDE6A02C1B1ED300B5AC40 /* MessageItem+Types.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9BDE69F2C1B1ED300B5AC40 /* MessageItem+Types.swift */; };
+		E9EEF1352C39564A0084304A /* BubbleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9EEF1342C39564A0084304A /* BubbleView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -144,6 +145,7 @@
 		E9BDE6992C19559000B5AC40 /* ChannelTabViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelTabViewModel.swift; sourceTree = "<group>"; };
 		E9BDE69C2C1AA7D500B5AC40 /* String+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Extensions.swift"; sourceTree = "<group>"; };
 		E9BDE69F2C1B1ED300B5AC40 /* MessageItem+Types.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MessageItem+Types.swift"; sourceTree = "<group>"; };
+		E9EEF1342C39564A0084304A /* BubbleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BubbleView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -360,6 +362,7 @@
 				E95206132C203D28006B4F03 /* ChannelCreationTextView.swift */,
 				E95206152C203FD8006B4F03 /* AdminMessageTextView.swift */,
 				E952061F2C213611006B4F03 /* MediaAttachmentPreview.swift */,
+				E9EEF1342C39564A0084304A /* BubbleView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -606,6 +609,7 @@
 				E9BDE69D2C1AA7D500B5AC40 /* String+Extensions.swift in Sources */,
 				E9BDE6502C144BF100B5AC40 /* BubbleTailView.swift in Sources */,
 				E95206342C23D892006B4F03 /* UIWindowScene+Extensions.swift in Sources */,
+				E9EEF1352C39564A0084304A /* BubbleView.swift in Sources */,
 				E95206102C1EDA04006B4F03 /* MessageService.swift in Sources */,
 				E9BDE6352C13E96E00B5AC40 /* ChannelTabScreen.swift in Sources */,
 				E952060E2C1ED83B006B4F03 /* ChatRoomViewModel.swift in Sources */,
