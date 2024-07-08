@@ -16,7 +16,8 @@ struct MessageService {
         
         let channelDict: [String: Any] = [
             .lastMessage: textMessage,
-            .lastMessageTimeStamp: timeStamp
+            .lastMessageTimeStamp: timeStamp,
+            .lastMessageType: MessageType.text.title
         ]
         
         let messageDict: [String: Any] = [

@@ -14,7 +14,7 @@ enum AdminMessageType: String {
     case channelNameChanged
 }
 
-enum MessageType {
+enum MessageType: Hashable {
     case admin(_ type: AdminMessageType), text, photo, video, audio
     
     var title: String {
