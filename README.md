@@ -1,3 +1,5 @@
+[![Build](https://github.com/tmrff/whatsapp-clone-swiftui/actions/workflows/build.yml/badge.svg)](https://github.com/tmrff/whatsapp-clone-swiftui/actions/workflows/build.yml)
+
 <!-- GETTING STARTED -->
 ## Getting Started
 
@@ -28,4 +30,5 @@ Distributed under the MIT License. See <a href="https://github.com/tmrff/whatsap
 <!-- ACKNOWLEDGMENTS -->
 ## Acknowledgments
 
-* [Swift Skool - YouTube ](https://www.youtube.com/@SwiftSkool)
+* Swift Skool
+* [Firebase Realtime Database Docs](https://firebase.google.com/docs/database/web/structure-data)
