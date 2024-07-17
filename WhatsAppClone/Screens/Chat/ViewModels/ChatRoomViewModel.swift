@@ -82,14 +82,18 @@ final class ChatRoomViewModel: ObservableObject {
     }
     
     func sendMessage() {
-        guard let currentUser else { return }
         if mediaAttachments.isEmpty {
-            MessageService.sendTextMessage(to: channel, from: currentUser, textMessage) { [weak self] in
-                self?.textMessage = ""
-            }
+            sendTextMessage(textMessage)
         } else {
             sendMultipleMediaMessages(textMessage, attachments: mediaAttachments)
             clearTextInputArea()
+        }
+    }
+    
+    private func sendTextMessage(_ text: String) {
+        guard let currentUser else { return }
+        MessageService.sendTextMessage(to: channel, from: currentUser, text) { [weak self] in
+            self?.textMessage = ""
         }
     }
     
@@ -170,6 +174,10 @@ final class ChatRoomViewModel: ObservableObject {
             
             MessageService.sendMediaMessage(to: self.channel, params: uploadParams) { [weak self] in
                 self?.scrollToBottom(isAnimated: true)
+            }
+            
+            if !text.isEmptyOrWhiteSpace {
+                self.sendTextMessage(text)
             }
         }
     }
