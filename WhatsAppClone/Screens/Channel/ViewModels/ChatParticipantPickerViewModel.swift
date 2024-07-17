@@ -74,7 +74,7 @@ final class ChatParticipantPickerViewModel: ObservableObject {
     // MARK: - Public Methods
     func fetchUsers() async {
         do {
-            let userNode = try await UserService.paginateUsers(lastCursor: lastCursor, pageSize: 5)
+            let userNode = try await UserService.paginateUsers(lastCursor: lastCursor, pageSize: 12)
             var fetchedUsers = userNode.users
             guard let currentUid = Auth.auth().currentUser?.uid else { return }
             fetchedUsers = fetchedUsers.filter { $0.uid != currentUid }
