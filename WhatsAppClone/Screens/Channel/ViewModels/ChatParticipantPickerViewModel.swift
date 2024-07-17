@@ -46,7 +46,7 @@ final class ChatParticipantPickerViewModel: ObservableObject {
         return !users.isEmpty
     }
     
-    private var isDirectChannel: Bool {
+    var isDirectChannel: Bool {
         return selectedChatParticipants.count == 1
     }
     
@@ -123,7 +123,9 @@ final class ChatParticipantPickerViewModel: ObservableObject {
     }
     
     func createDirectChannel(_ chatParticipant: UserItem, completion: @escaping(_ newChannel: ChannelItem) -> Void) {
-        selectedChatParticipants.append(chatParticipant)
+        if selectedChatParticipants.isEmpty {
+            selectedChatParticipants.append(chatParticipant)
+        }
         Task {
             // if existing DM, get the channel
             if let channelId = await verifyIfDirectChannelExisits(with: chatParticipant.uid) {
