@@ -76,6 +76,7 @@
 		E9BDE69A2C19559000B5AC40 /* ChannelTabViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9BDE6992C19559000B5AC40 /* ChannelTabViewModel.swift */; };
 		E9BDE69D2C1AA7D500B5AC40 /* String+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9BDE69C2C1AA7D500B5AC40 /* String+Extensions.swift */; };
 		E9BDE6A02C1B1ED300B5AC40 /* MessageItem+Types.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9BDE69F2C1B1ED300B5AC40 /* MessageItem+Types.swift */; };
+		E9DB8E4F2C4FC26800157AEF /* SettingsTabViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9DB8E4E2C4FC26800157AEF /* SettingsTabViewModel.swift */; };
 		E9EEF1352C39564A0084304A /* BubbleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9EEF1342C39564A0084304A /* BubbleView.swift */; };
 /* End PBXBuildFile section */
 
@@ -145,6 +146,7 @@
 		E9BDE6992C19559000B5AC40 /* ChannelTabViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelTabViewModel.swift; sourceTree = "<group>"; };
 		E9BDE69C2C1AA7D500B5AC40 /* String+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Extensions.swift"; sourceTree = "<group>"; };
 		E9BDE69F2C1B1ED300B5AC40 /* MessageItem+Types.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MessageItem+Types.swift"; sourceTree = "<group>"; };
+		E9DB8E4E2C4FC26800157AEF /* SettingsTabViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsTabViewModel.swift; sourceTree = "<group>"; };
 		E9EEF1342C39564A0084304A /* BubbleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BubbleView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -243,6 +245,7 @@
 		E9BDE6282C1300BC00B5AC40 /* Settings */ = {
 			isa = PBXGroup;
 			children = (
+				E9DB8E4D2C4FC24800157AEF /* ViewModels */,
 				E9BDE63D2C13FE2700B5AC40 /* Models */,
 				E9BDE6382C13FC8E00B5AC40 /* Views */,
 			);
@@ -501,6 +504,14 @@
 			path = Extensions;
 			sourceTree = "<group>";
 		};
+		E9DB8E4D2C4FC24800157AEF /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+				E9DB8E4E2C4FC26800157AEF /* SettingsTabViewModel.swift */,
+			);
+			path = ViewModels;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -621,6 +632,7 @@
 				E95206262C214D16006B4F03 /* MediaPickerItem+Types.swift in Sources */,
 				E9BDE67F2C16964B00B5AC40 /* RootScreenViewModel.swift in Sources */,
 				E9BDE68E2C170BDB00B5AC40 /* GroupParticipantPickerScreen.swift in Sources */,
+				E9DB8E4F2C4FC26800157AEF /* SettingsTabViewModel.swift in Sources */,
 				E97C8C7D2C311B0200B5C052 /* Haptic.swift in Sources */,
 				E95206372C264FA3006B4F03 /* VoiceMessagePlayer.swift in Sources */,
 				E95206142C203D28006B4F03 /* ChannelCreationTextView.swift in Sources */,

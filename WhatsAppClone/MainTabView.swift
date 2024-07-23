@@ -40,7 +40,7 @@ struct MainTabView: View {
                     Image(systemName: Tab.chat.icon)
                     Text(Tab.chat.title)
                 }
-            SettingsTabScreen()
+            SettingsTabScreen(currentUser)
                 .tabItem {
                     Image(systemName: Tab.settings.icon)
                     Text(Tab.settings.title)
