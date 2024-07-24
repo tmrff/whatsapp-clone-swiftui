@@ -45,7 +45,8 @@ struct SettingsTabScreen: View {
             .navigationTitle("Settings")
             .searchable(text: $searchText)
             .toolbar {
-               leadingNavItem()
+                leadingNavItem()
+                trailingNavItem()
             }
         }
     }
@@ -59,6 +60,17 @@ extension SettingsTabScreen {
                 Task { try? await AuthManager.shared.logout() }
             }
             .foregroundStyle(.red)
+        }
+    }
+    
+    @ToolbarContentBuilder
+    private func trailingNavItem() -> some ToolbarContent {
+        ToolbarItem(placement: .topBarTrailing) {
+            Button("Save") {
+                viewModel.uploadProfilePhoto()
+            }
+            .bold()
+            .disabled(viewModel.disableSaveButton)
         }
     }
 }
@@ -96,7 +108,7 @@ private struct SettingsHeaderView: View {
                 .frame(width: 55, height: 55)
                 .clipShape(Circle())
         } else {
-            CircularProfileImageView(nil, size: .custom(55))
+            CircularProfileImageView(currentUser.profileImageURL, size: .custom(55))
         }
     }
     
