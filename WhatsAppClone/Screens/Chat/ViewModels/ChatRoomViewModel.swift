@@ -53,15 +53,15 @@ final class ChatRoomViewModel: ObservableObject {
     
     private func listenToAuthState() {
         AuthManager.shared.authState.receive(on: DispatchQueue.main).sink { [weak self] authState in
-            guard let self = self else { return }
+            guard let self else { return }
             switch authState {
             case .loggedIn(let currentUser):
                 self.currentUser = currentUser
-                if self.channel.allMembersFetched {
-                    self.getHistoricalMessages()
+                if channel.allMembersFetched {
+                    getHistoricalMessages()
                     print("channel members: \(channel.members.map { $0.username })")
                 } else {
-                    self.getAllChannelMembers()
+                    getAllChannelMembers()
                 }
             default:
                 break
@@ -120,7 +120,7 @@ final class ChatRoomViewModel: ObservableObject {
     
     private func sendPhotoMessage(text: String, _ attachment: MediaAttachment) {
         uploadImageToStorage(attachment) { [weak self] imageUrl in
-            guard let self = self, let currentUser else { return }
+            guard let self, let currentUser else { return }
             print("Uploaded image to storage")
             
             let uploadParams = MessageUploadParams(
@@ -141,7 +141,7 @@ final class ChatRoomViewModel: ObservableObject {
     private func sendVideoMessage(text: String, _ attachment: MediaAttachment) {
         uploadFileToStorage(for: .videoMessage, attachment) { [weak self] videoURL in
             self?.uploadImageToStorage(attachment) { [weak self] thumbnailUrl in
-                guard let self = self, let currentUser else { return }
+                guard let self, let currentUser else { return }
                 let uploadParams = MessageUploadParams(
                     channel: self.channel,
                     text: text,
@@ -151,7 +151,7 @@ final class ChatRoomViewModel: ObservableObject {
                     videoURL: videoURL.absoluteString,
                     sender: currentUser
                 )
-                MessageService.sendMediaMessage(to: self.channel, params: uploadParams) { [weak self] in
+                MessageService.sendMediaMessage(to: channel, params: uploadParams) { [weak self] in
                     self?.scrollToBottom(isAnimated: true)
                 }
             }
@@ -271,9 +271,9 @@ final class ChatRoomViewModel: ObservableObject {
         memberUidsToFetch = memberUidsToFetch.filter { $0 != currentUser.uid }
         
         UserService.getUsers(with: memberUidsToFetch) { [weak self] userNode in
-            guard let self = self else { return }
-            self.channel.members.append(contentsOf: userNode.users)
-            self.getHistoricalMessages()
+            guard let self else { return }
+            channel.members.append(contentsOf: userNode.users)
+            getHistoricalMessages()
             print("getAllChannelMembers: \(channel.members.map { $0.username })")
         }
     }
@@ -308,9 +308,9 @@ final class ChatRoomViewModel: ObservableObject {
     
     private func onPhotoPickerSelection() {
         $photoPickerItems.sink { [weak self] photoItems in
-            guard let self = self else { return }
+            guard let self else { return }
             let audioRecordings = mediaAttachments.filter({ $0.type == .audio(.stubURL, .stubTimeInterval) })
-            self.mediaAttachments = audioRecordings
+            mediaAttachments = audioRecordings
             Task { await self.parsePhotoPickerItems(photoItems) }
         }.store(in: &subscriptions)
     }

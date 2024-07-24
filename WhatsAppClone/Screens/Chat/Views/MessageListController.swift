@@ -139,12 +139,12 @@ final class MessageListController: UIViewController {
         viewModel.$isPaginating
             .debounce(for: .milliseconds(delay), scheduler: DispatchQueue.main)
             .sink { [weak self] isPaginating in
-                guard let self = self, let lastScrollPosition else { return }
+                guard let self, let lastScrollPosition else { return }
                 if isPaginating == false {
                     guard let index = viewModel.messages.firstIndex(where: { $0.id == lastScrollPosition }) else { return }
                     let indexPath = IndexPath(item: index, section: 0)
-                    self.messagesCollectionView.scrollToItem(at: indexPath, at: .top, animated: false)
-                    self.pullToRefresh.endRefreshing()
+                    messagesCollectionView.scrollToItem(at: indexPath, at: .top, animated: false)
+                    pullToRefresh.endRefreshing()
                 }
             }.store(in: &subscriptions)
     }
