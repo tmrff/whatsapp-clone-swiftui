@@ -48,6 +48,8 @@ struct SettingsTabScreen: View {
                 leadingNavItem()
                 trailingNavItem()
             }
+            .alert(isPresent: $viewModel.showProgressToast, view: viewModel.progressToastView)
+            .alert(isPresent: $viewModel.showSuccessToast, view: viewModel.successToastView)
         }
     }
 }

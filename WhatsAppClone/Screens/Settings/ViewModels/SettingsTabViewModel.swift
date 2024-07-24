@@ -9,11 +9,18 @@ import SwiftUI
 import PhotosUI
 import Combine
 import Firebase
+import AlertKit
 
 @MainActor
 final class SettingsTabViewModel: ObservableObject {
     @Published var selectedPhotoItem: PhotosPickerItem?
     @Published var profilePhoto: MediaAttachment?
+    @Published var showProgressToast = false
+    @Published var showSuccessToast = false
+    
+    private(set) var progressToastView = AlertAppleMusic17View(title: "Uploading Profile Photo", icon: .spinnerSmall)
+    private(set) var successToastView = AlertAppleMusic17View(title: "Profile Info Updated", icon: .done)
+    
     private var subscription: AnyCancellable?
     
     var disableSaveButton: Bool {
@@ -43,6 +50,7 @@ final class SettingsTabViewModel: ObservableObject {
     
     func uploadProfilePhoto() {
         guard let profilePhoto = profilePhoto?.thumbnail else { return }
+        showProgressToast = true
         FirebaseHelper.uploadImage(profilePhoto, for: .profilePhoto) { [weak self] result  in
             switch result {
             case.success(let imageUrl):
@@ -58,9 +66,13 @@ final class SettingsTabViewModel: ObservableObject {
     private func onUploadSuccess(_ imageUrl: URL) {
         guard let currentUid = Auth.auth().currentUser?.uid else { return }
         FirebaseConstants.UserRef.child(currentUid).child(.profileImageURL).setValue(imageUrl.absoluteString)
-        // Disable save button
-        profilePhoto = nil
-        selectedPhotoItem = nil
+        showProgressToast = false
+        progressToastView.dismiss()
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+            self.showSuccessToast = true
+            self.profilePhoto = nil
+            self.selectedPhotoItem = nil
+        }
         print("onUploadSuccess: \(imageUrl.absoluteString)")
     }
 }
