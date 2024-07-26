@@ -17,6 +17,10 @@ final class SettingsTabViewModel: ObservableObject {
     @Published var profilePhoto: MediaAttachment?
     @Published var showProgressToast = false
     @Published var showSuccessToast = false
+    @Published var showUserInfoEditor = false
+    @Published var name = ""
+    @Published var bio = ""
+    private var currentUser: UserItem
     
     private(set) var progressToastView = AlertAppleMusic17View(title: "Uploading Profile Photo", icon: .spinnerSmall)
     private(set) var successToastView = AlertAppleMusic17View(title: "Profile Info Updated", icon: .done)
@@ -24,10 +28,13 @@ final class SettingsTabViewModel: ObservableObject {
     private var subscription: AnyCancellable?
     
     var disableSaveButton: Bool {
-        return profilePhoto == nil
+        return profilePhoto == nil || showProgressToast
     }
     
-    init() {
+    init(_ currentUser: UserItem) {
+        self.currentUser = currentUser
+        self.name = currentUser.username
+        self.bio = currentUser.bio ?? ""
         onPhotoPickerSelection()
     }
     
@@ -68,11 +75,28 @@ final class SettingsTabViewModel: ObservableObject {
         FirebaseConstants.UserRef.child(currentUid).child(.profileImageURL).setValue(imageUrl.absoluteString)
         showProgressToast = false
         progressToastView.dismiss()
+        currentUser.profileImageURL = imageUrl.absoluteString
+        AuthManager.shared.authState.send(.loggedIn(currentUser))
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
             self.showSuccessToast = true
             self.profilePhoto = nil
             self.selectedPhotoItem = nil
         }
         print("onUploadSuccess: \(imageUrl.absoluteString)")
+    }
+    
+    func updateUsernameBio() {
+        guard let currentUid = Auth.auth().currentUser?.uid else { return }
+        var dict: [String: Any] = [.bio: bio]
+        currentUser.bio = bio
+        
+        if !name.isEmptyOrWhiteSpace {
+            dict[.username] = name
+            currentUser.username = name
+        }
+        
+        FirebaseConstants.UserRef.child(currentUid).updateChildValues(dict)
+        showSuccessToast = true
+        AuthManager.shared.authState.send(.loggedIn(currentUser))
     }
 }
