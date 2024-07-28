@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		E93498432C55D05D0034B0DF /* ReactionPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E93498422C55D05D0034B0DF /* ReactionPickerView.swift */; };
+		E93498452C56664A0034B0DF /* MessageMenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E93498442C56664A0034B0DF /* MessageMenuView.swift */; };
 		E952060E2C1ED83B006B4F03 /* ChatRoomViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E952060D2C1ED83B006B4F03 /* ChatRoomViewModel.swift */; };
 		E95206102C1EDA04006B4F03 /* MessageService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E952060F2C1EDA04006B4F03 /* MessageService.swift */; };
 		E95206142C203D28006B4F03 /* ChannelCreationTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E95206132C203D28006B4F03 /* ChannelCreationTextView.swift */; };
@@ -84,6 +85,7 @@
 
 /* Begin PBXFileReference section */
 		E93498422C55D05D0034B0DF /* ReactionPickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReactionPickerView.swift; sourceTree = "<group>"; };
+		E93498442C56664A0034B0DF /* MessageMenuView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageMenuView.swift; sourceTree = "<group>"; };
 		E952060D2C1ED83B006B4F03 /* ChatRoomViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatRoomViewModel.swift; sourceTree = "<group>"; };
 		E952060F2C1EDA04006B4F03 /* MessageService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageService.swift; sourceTree = "<group>"; };
 		E95206132C203D28006B4F03 /* ChannelCreationTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelCreationTextView.swift; sourceTree = "<group>"; };
@@ -371,6 +373,7 @@
 				E952061F2C213611006B4F03 /* MediaAttachmentPreview.swift */,
 				E9EEF1342C39564A0084304A /* BubbleView.swift */,
 				E93498422C55D05D0034B0DF /* ReactionPickerView.swift */,
+				E93498442C56664A0034B0DF /* MessageMenuView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -639,6 +642,7 @@
 				E95206262C214D16006B4F03 /* MediaPickerItem+Types.swift in Sources */,
 				E9BDE67F2C16964B00B5AC40 /* RootScreenViewModel.swift in Sources */,
 				E9BDE68E2C170BDB00B5AC40 /* GroupParticipantPickerScreen.swift in Sources */,
+				E93498452C56664A0034B0DF /* MessageMenuView.swift in Sources */,
 				E9DB8E4F2C4FC26800157AEF /* SettingsTabViewModel.swift in Sources */,
 				E97C8C7D2C311B0200B5C052 /* Haptic.swift in Sources */,
 				E95206372C264FA3006B4F03 /* VoiceMessagePlayer.swift in Sources */,
