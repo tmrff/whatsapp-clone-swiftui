@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		E93498432C55D05D0034B0DF /* ReactionPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E93498422C55D05D0034B0DF /* ReactionPickerView.swift */; };
 		E952060E2C1ED83B006B4F03 /* ChatRoomViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E952060D2C1ED83B006B4F03 /* ChatRoomViewModel.swift */; };
 		E95206102C1EDA04006B4F03 /* MessageService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E952060F2C1EDA04006B4F03 /* MessageService.swift */; };
 		E95206142C203D28006B4F03 /* ChannelCreationTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E95206132C203D28006B4F03 /* ChannelCreationTextView.swift */; };
@@ -82,6 +83,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		E93498422C55D05D0034B0DF /* ReactionPickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReactionPickerView.swift; sourceTree = "<group>"; };
 		E952060D2C1ED83B006B4F03 /* ChatRoomViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatRoomViewModel.swift; sourceTree = "<group>"; };
 		E952060F2C1EDA04006B4F03 /* MessageService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageService.swift; sourceTree = "<group>"; };
 		E95206132C203D28006B4F03 /* ChannelCreationTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelCreationTextView.swift; sourceTree = "<group>"; };
@@ -368,6 +370,7 @@
 				E95206152C203FD8006B4F03 /* AdminMessageTextView.swift */,
 				E952061F2C213611006B4F03 /* MediaAttachmentPreview.swift */,
 				E9EEF1342C39564A0084304A /* BubbleView.swift */,
+				E93498422C55D05D0034B0DF /* ReactionPickerView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -649,6 +652,7 @@
 				E9BDE6892C16E7BF00B5AC40 /* ChatParticipantRowView.swift in Sources */,
 				E9BDE66C2C15D03900B5AC40 /* AuthTextField.swift in Sources */,
 				E9BDE64E2C144AEA00B5AC40 /* BubbleTextView.swift in Sources */,
+				E93498432C55D05D0034B0DF /* ReactionPickerView.swift in Sources */,
 				E9BDE64C2C14498F00B5AC40 /* MessageItem.swift in Sources */,
 				E9BDE6372C13EF4100B5AC40 /* ChannelItemView.swift in Sources */,
 				E9BDE6202C128DAE00B5AC40 /* MainTabView.swift in Sources */,
