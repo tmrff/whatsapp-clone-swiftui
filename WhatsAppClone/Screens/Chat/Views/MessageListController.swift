@@ -197,56 +197,6 @@ extension MessageListController: UICollectionViewDelegate, UICollectionViewDataS
         }
     }
     
-    private func attachMenuActionItems(to message: MessageItem, in window: UIWindow) {
-        guard let focusedView, let startingFrame else { return }
-        
-        let reactionPickerView = ReactionPickerView(message: message)
-        
-        let reactionHostVC = UIHostingController(rootView: reactionPickerView)
-        reactionHostVC.view.backgroundColor = .clear
-        reactionHostVC.view.translatesAutoresizingMaskIntoConstraints = false
-        
-        window.addSubview(reactionHostVC.view)
-        reactionHostVC.view.bottomAnchor.constraint(equalTo: focusedView.topAnchor, constant: 5).isActive = true
-        reactionHostVC.view.leadingAnchor.constraint(equalTo: focusedView.leadingAnchor, constant: 20).isActive = message.direction == .received
-        reactionHostVC.view.trailingAnchor.constraint(equalTo: focusedView.trailingAnchor, constant: -20).isActive = message.direction == .sent
-        
-        let messageMenuView = MessageMenuView(message: message)
-        
-        let messageMenuHostVC = UIHostingController(rootView: messageMenuView)
-        messageMenuHostVC.view.translatesAutoresizingMaskIntoConstraints = false
-        messageMenuHostVC.view.backgroundColor = .clear
-        window.addSubview(messageMenuHostVC.view)
-        messageMenuHostVC.view.topAnchor.constraint(equalTo: focusedView.bottomAnchor, constant: 0).isActive = true
-        
-        messageMenuHostVC.view.leadingAnchor.constraint(equalTo: focusedView.leadingAnchor, constant: 20).isActive = message.direction == .received
-        messageMenuHostVC.view.trailingAnchor.constraint(equalTo: focusedView.trailingAnchor, constant: -20).isActive = message.direction == .sent
-
-        self.reactionHostVC = reactionHostVC
-        self.messageMenuHostVC = messageMenuHostVC
-    }
-    
-    @objc private func dismissContextMenu() {
-        UIView.animate(withDuration: 0.6, delay: 0, usingSpringWithDamping: 0.7, initialSpringVelocity: 1, options: .curveEaseIn) { [weak self] in
-            guard let self else { return }
-            focusedView?.frame = self.startingFrame ?? .zero
-            reactionHostVC?.view.removeFromSuperview()
-            messageMenuHostVC?.view.removeFromSuperview()
-            blurView?.alpha = 0
-        } completion: { [weak self] _ in
-            guard let self else { return }
-            highlightedCell?.alpha = 1
-            blurView?.removeFromSuperview()
-            focusedView?.removeFromSuperview()
-            
-            highlightedCell = nil
-            blurView = nil
-            focusedView = nil
-            reactionHostVC = nil
-            messageMenuHostVC = nil
-        }
-    }
-    
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         if scrollView.contentOffset.y <= 0 {
             pullDownHUDView.alpha = viewModel.isPaginatable ? 1 : 0
@@ -307,6 +257,56 @@ extension MessageListController {
             snapshotCell.layer.applyShadow(color: .gray, alpha: 0.2, x: 2, y: 2, blur: 4)
         }
 
+    }
+    
+    private func attachMenuActionItems(to message: MessageItem, in window: UIWindow) {
+        guard let focusedView, let startingFrame else { return }
+        
+        let reactionPickerView = ReactionPickerView(message: message)
+        
+        let reactionHostVC = UIHostingController(rootView: reactionPickerView)
+        reactionHostVC.view.backgroundColor = .clear
+        reactionHostVC.view.translatesAutoresizingMaskIntoConstraints = false
+        
+        window.addSubview(reactionHostVC.view)
+        reactionHostVC.view.bottomAnchor.constraint(equalTo: focusedView.topAnchor, constant: 5).isActive = true
+        reactionHostVC.view.leadingAnchor.constraint(equalTo: focusedView.leadingAnchor, constant: 20).isActive = message.direction == .received
+        reactionHostVC.view.trailingAnchor.constraint(equalTo: focusedView.trailingAnchor, constant: -20).isActive = message.direction == .sent
+        
+        let messageMenuView = MessageMenuView(message: message)
+        
+        let messageMenuHostVC = UIHostingController(rootView: messageMenuView)
+        messageMenuHostVC.view.translatesAutoresizingMaskIntoConstraints = false
+        messageMenuHostVC.view.backgroundColor = .clear
+        window.addSubview(messageMenuHostVC.view)
+        messageMenuHostVC.view.topAnchor.constraint(equalTo: focusedView.bottomAnchor, constant: 0).isActive = true
+        
+        messageMenuHostVC.view.leadingAnchor.constraint(equalTo: focusedView.leadingAnchor, constant: 20).isActive = message.direction == .received
+        messageMenuHostVC.view.trailingAnchor.constraint(equalTo: focusedView.trailingAnchor, constant: -20).isActive = message.direction == .sent
+
+        self.reactionHostVC = reactionHostVC
+        self.messageMenuHostVC = messageMenuHostVC
+    }
+    
+    @objc private func dismissContextMenu() {
+        UIView.animate(withDuration: 0.6, delay: 0, usingSpringWithDamping: 0.7, initialSpringVelocity: 1, options: .curveEaseIn) { [weak self] in
+            guard let self else { return }
+            focusedView?.frame = self.startingFrame ?? .zero
+            reactionHostVC?.view.removeFromSuperview()
+            messageMenuHostVC?.view.removeFromSuperview()
+            blurView?.alpha = 0
+        } completion: { [weak self] _ in
+            guard let self else { return }
+            highlightedCell?.alpha = 1
+            blurView?.removeFromSuperview()
+            focusedView?.removeFromSuperview()
+            
+            highlightedCell = nil
+            blurView = nil
+            focusedView = nil
+            reactionHostVC = nil
+            messageMenuHostVC = nil
+        }
     }
 }
 
