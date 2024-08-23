@@ -253,18 +253,28 @@ extension MessageListController {
         let isNewDay = viewModel.isNewDay(for: message, at: indexPath.item)
         
         attachMenuActionItems(to: message, in: keyWindow, isNewDay)
+        
+        let shrinkCell = shrinkCell(startingFrame?.height ?? 0)
+        
         UIView.animate(withDuration: 0.6, delay: 0, usingSpringWithDamping: 0.7, initialSpringVelocity: 1, options: .curveEaseIn) {
             blurView.alpha = 1
             focusedView.center.y = keyWindow.center.y - 60
             snapshotCell.frame = focusedView.bounds
             
             snapshotCell.layer.applyShadow(color: .gray, alpha: 0.2, x: 2, y: 2, blur: 4)
+            
+            if shrinkCell {
+                let xTranslation: CGFloat = message.direction == .received ? -80 : 80
+                let translation = CGAffineTransform(translationX: xTranslation, y: 1)
+                focusedView.transform = CGAffineTransform(scaleX: 0.5, y: 0.5).concatenating(translation)
+            }
         }
 
     }
     
     private func attachMenuActionItems(to message: MessageItem, in window: UIWindow, _ isNewDay: Bool) {
         guard let focusedView, let startingFrame else { return }
+        let shrinkCell = shrinkCell(startingFrame.height)
         
         let reactionPickerView = ReactionPickerView(message: message)
         
@@ -273,6 +283,10 @@ extension MessageListController {
         reactionHostVC.view.translatesAutoresizingMaskIntoConstraints = false
         
         var reactionPadding: CGFloat = isNewDay ? 45 : 5
+        
+        if shrinkCell {
+            reactionPadding += (startingFrame.height / 3)
+        }
         
         window.addSubview(reactionHostVC.view)
         reactionHostVC.view.bottomAnchor.constraint(equalTo: focusedView.topAnchor, constant: reactionPadding).isActive = true
@@ -284,8 +298,14 @@ extension MessageListController {
         let messageMenuHostVC = UIHostingController(rootView: messageMenuView)
         messageMenuHostVC.view.translatesAutoresizingMaskIntoConstraints = false
         messageMenuHostVC.view.backgroundColor = .clear
+         
+        var menuPadding: CGFloat = 0
+        if shrinkCell {
+            menuPadding -= (startingFrame.height / 2.5)
+        }
+        
         window.addSubview(messageMenuHostVC.view)
-        messageMenuHostVC.view.topAnchor.constraint(equalTo: focusedView.bottomAnchor, constant: 0).isActive = true
+        messageMenuHostVC.view.topAnchor.constraint(equalTo: focusedView.bottomAnchor, constant: menuPadding).isActive = true
         
         messageMenuHostVC.view.leadingAnchor.constraint(equalTo: focusedView.leadingAnchor, constant: 20).isActive = message.direction == .received
         messageMenuHostVC.view.trailingAnchor.constraint(equalTo: focusedView.trailingAnchor, constant: -20).isActive = message.direction == .sent
@@ -297,6 +317,7 @@ extension MessageListController {
     @objc private func dismissContextMenu() {
         UIView.animate(withDuration: 0.6, delay: 0, usingSpringWithDamping: 0.7, initialSpringVelocity: 1, options: .curveEaseIn) { [weak self] in
             guard let self else { return }
+            focusedView?.transform = .identity
             focusedView?.frame = self.startingFrame ?? .zero
             reactionHostVC?.view.removeFromSuperview()
             messageMenuHostVC?.view.removeFromSuperview()
@@ -313,6 +334,12 @@ extension MessageListController {
             reactionHostVC = nil
             messageMenuHostVC = nil
         }
+    }
+    
+    private func shrinkCell(_ cellHeight: CGFloat) -> Bool {
+        let screenHeight = (UIWindowScene.current?.screenHeight ?? 0) / 1.2
+        let spacingForMenuView = screenHeight - cellHeight
+        return spacingForMenuView < 190
     }
 }
 
