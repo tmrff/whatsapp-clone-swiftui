@@ -248,7 +248,9 @@ extension MessageListController {
         blurView.frame = keyWindow.frame
         
         let message = viewModel.messages[indexPath.item]
-        attachMenuActionItems(to: message, in: keyWindow)
+        let isNewDay = viewModel.isNewDay(for: message, at: indexPath.item)
+        
+        attachMenuActionItems(to: message, in: keyWindow, isNewDay)
         UIView.animate(withDuration: 0.6, delay: 0, usingSpringWithDamping: 0.7, initialSpringVelocity: 1, options: .curveEaseIn) {
             blurView.alpha = 1
             focusedView.center.y = keyWindow.center.y - 60
@@ -259,7 +261,7 @@ extension MessageListController {
 
     }
     
-    private func attachMenuActionItems(to message: MessageItem, in window: UIWindow) {
+    private func attachMenuActionItems(to message: MessageItem, in window: UIWindow, _ isNewDay: Bool) {
         guard let focusedView, let startingFrame else { return }
         
         let reactionPickerView = ReactionPickerView(message: message)
@@ -268,8 +270,10 @@ extension MessageListController {
         reactionHostVC.view.backgroundColor = .clear
         reactionHostVC.view.translatesAutoresizingMaskIntoConstraints = false
         
+        var reactionPadding: CGFloat = isNewDay ? 45 : 5
+        
         window.addSubview(reactionHostVC.view)
-        reactionHostVC.view.bottomAnchor.constraint(equalTo: focusedView.topAnchor, constant: 5).isActive = true
+        reactionHostVC.view.bottomAnchor.constraint(equalTo: focusedView.topAnchor, constant: reactionPadding).isActive = true
         reactionHostVC.view.leadingAnchor.constraint(equalTo: focusedView.leadingAnchor, constant: 20).isActive = message.direction == .received
         reactionHostVC.view.trailingAnchor.constraint(equalTo: focusedView.trailingAnchor, constant: -20).isActive = message.direction == .sent
         
