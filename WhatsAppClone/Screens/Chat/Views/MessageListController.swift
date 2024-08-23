@@ -219,7 +219,10 @@ extension MessageListController {
         
         let point = gesture.location(in: messagesCollectionView)
         guard let indexPath = messagesCollectionView.indexPathForItem(at: point) else { return }
+        let message = viewModel.messages[indexPath.item]
         
+        guard message.type.isAdminMessage == false else { return }
+
         guard let selectedCell = messagesCollectionView.cellForItem(at: indexPath) else { return }
         
         startingFrame = selectedCell.superview?.convert(selectedCell.frame, to: nil)
@@ -247,7 +250,6 @@ extension MessageListController {
         focusedView.addSubview(snapshotCell)
         blurView.frame = keyWindow.frame
         
-        let message = viewModel.messages[indexPath.item]
         let isNewDay = viewModel.isNewDay(for: message, at: indexPath.item)
         
         attachMenuActionItems(to: message, in: keyWindow, isNewDay)
