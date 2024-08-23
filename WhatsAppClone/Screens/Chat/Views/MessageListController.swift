@@ -18,6 +18,7 @@ final class MessageListController: UIViewController {
         view.backgroundColor = .clear
         setUpViews()
         setUpMessageListeners()
+        setupLongPressGestureRecogniser()
     }
     
     init(_ viewModel: ChatRoomViewModel) {
@@ -183,44 +184,6 @@ extension MessageListController: UICollectionViewDelegate, UICollectionViewDataS
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        
-        guard let selectedCell = collectionView.cellForItem(at: indexPath) else { return }
-        
-        startingFrame = selectedCell.superview?.convert(selectedCell.frame, to: nil)
-        guard let snapshotCell = selectedCell.snapshotView(afterScreenUpdates: false) else { return }
-        
-        focusedView = UIView(frame: startingFrame ?? .zero)
-        guard let focusedView else { return }
-        focusedView.isUserInteractionEnabled = false
-        
-        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(dismissContextMenu))
-        
-        let blurEffect = UIBlurEffect(style: .regular)
-        blurView = UIVisualEffectView(effect: blurEffect)
-        guard let blurView else { return }
-        blurView.contentView.isUserInteractionEnabled = true
-        blurView.contentView.addGestureRecognizer(tapGesture)
-        blurView.alpha = 0
-        highlightedCell = selectedCell
-        highlightedCell?.alpha = 0
-        
-        guard let keyWindow = UIWindowScene.current?.keyWindow else { return }
-        
-        keyWindow.addSubview(blurView)
-        keyWindow.addSubview(focusedView)
-        focusedView.addSubview(snapshotCell)
-        blurView.frame = keyWindow.frame
-        
-        let message = viewModel.messages[indexPath.item]
-        attachMenuActionItems(to: message, in: keyWindow)
-        UIView.animate(withDuration: 0.6, delay: 0, usingSpringWithDamping: 0.7, initialSpringVelocity: 1, options: .curveEaseIn) {
-            blurView.alpha = 1
-            focusedView.center.y = keyWindow.center.y - 60
-            snapshotCell.frame = focusedView.bounds
-            
-            snapshotCell.layer.applyShadow(color: .gray, alpha: 0.2, x: 2, y: 2, blur: 4)
-        }
-        
         UIApplication.dismissKeyboard()
         let messageItem = viewModel.messages[indexPath.row]
         switch messageItem.type {
@@ -290,6 +253,60 @@ extension MessageListController: UICollectionViewDelegate, UICollectionViewDataS
         } else {
             pullDownHUDView.alpha = 0
         }
+    }
+}
+
+// MARK: Context Menu Interactions
+extension MessageListController {
+    private func setupLongPressGestureRecogniser() {
+        let longPressGesture = UILongPressGestureRecognizer(target: self, action: #selector(showContextMenu))
+        longPressGesture.minimumPressDuration = 0.5
+        messagesCollectionView.addGestureRecognizer(longPressGesture)
+    }
+    
+    @objc private func showContextMenu(_ gesture: UIGestureRecognizer) {
+        guard gesture.state == .began else { return }
+        
+        let point = gesture.location(in: messagesCollectionView)
+        guard let indexPath = messagesCollectionView.indexPathForItem(at: point) else { return }
+        
+        guard let selectedCell = messagesCollectionView.cellForItem(at: indexPath) else { return }
+        
+        startingFrame = selectedCell.superview?.convert(selectedCell.frame, to: nil)
+        guard let snapshotCell = selectedCell.snapshotView(afterScreenUpdates: false) else { return }
+        
+        focusedView = UIView(frame: startingFrame ?? .zero)
+        guard let focusedView else { return }
+        focusedView.isUserInteractionEnabled = false
+        
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(dismissContextMenu))
+        
+        let blurEffect = UIBlurEffect(style: .regular)
+        blurView = UIVisualEffectView(effect: blurEffect)
+        guard let blurView else { return }
+        blurView.contentView.isUserInteractionEnabled = true
+        blurView.contentView.addGestureRecognizer(tapGesture)
+        blurView.alpha = 0
+        highlightedCell = selectedCell
+        highlightedCell?.alpha = 0
+        
+        guard let keyWindow = UIWindowScene.current?.keyWindow else { return }
+        
+        keyWindow.addSubview(blurView)
+        keyWindow.addSubview(focusedView)
+        focusedView.addSubview(snapshotCell)
+        blurView.frame = keyWindow.frame
+        
+        let message = viewModel.messages[indexPath.item]
+        attachMenuActionItems(to: message, in: keyWindow)
+        UIView.animate(withDuration: 0.6, delay: 0, usingSpringWithDamping: 0.7, initialSpringVelocity: 1, options: .curveEaseIn) {
+            blurView.alpha = 1
+            focusedView.center.y = keyWindow.center.y - 60
+            snapshotCell.frame = focusedView.bounds
+            
+            snapshotCell.layer.applyShadow(color: .gray, alpha: 0.2, x: 2, y: 2, blur: 4)
+        }
+
     }
 }
 
