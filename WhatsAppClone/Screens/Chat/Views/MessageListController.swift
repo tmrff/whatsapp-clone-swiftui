@@ -278,7 +278,7 @@ extension MessageListController {
         
         let reactionPickerView = ReactionPickerView(message: message) { [weak self] reaction in
             self?.dismissContextMenu()
-            print("reacted with \(reaction.emoji)")
+            self?.viewModel.addReaction(reaction, to: message)
         }
         
         let reactionHostVC = UIHostingController(rootView: reactionPickerView)
