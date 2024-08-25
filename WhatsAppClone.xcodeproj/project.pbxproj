@@ -27,6 +27,7 @@
 		E95206322C23D6A9006B4F03 /* UIApplication+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = E95206312C23D6A9006B4F03 /* UIApplication+Extensions.swift */; };
 		E95206342C23D892006B4F03 /* UIWindowScene+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = E95206332C23D892006B4F03 /* UIWindowScene+Extensions.swift */; };
 		E95206372C264FA3006B4F03 /* VoiceMessagePlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = E95206362C264FA3006B4F03 /* VoiceMessagePlayer.swift */; };
+		E95F273B2C7A071D00ACE42E /* MessageReactionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E95F273A2C7A071D00ACE42E /* MessageReactionView.swift */; };
 		E97C8C7D2C311B0200B5C052 /* Haptic.swift in Sources */ = {isa = PBXBuildFile; fileRef = E97C8C7C2C311B0200B5C052 /* Haptic.swift */; };
 		E9BDE6122C128CB200B5AC40 /* WhatsAppCloneApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9BDE6112C128CB200B5AC40 /* WhatsAppCloneApp.swift */; };
 		E9BDE6162C128CB300B5AC40 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E9BDE6152C128CB300B5AC40 /* Assets.xcassets */; };
@@ -104,6 +105,7 @@
 		E95206332C23D892006B4F03 /* UIWindowScene+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIWindowScene+Extensions.swift"; sourceTree = "<group>"; };
 		E95206352C240754006B4F03 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		E95206362C264FA3006B4F03 /* VoiceMessagePlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VoiceMessagePlayer.swift; sourceTree = "<group>"; };
+		E95F273A2C7A071D00ACE42E /* MessageReactionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageReactionView.swift; sourceTree = "<group>"; };
 		E97C8C7C2C311B0200B5C052 /* Haptic.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Haptic.swift; sourceTree = "<group>"; };
 		E9BDE60E2C128CB200B5AC40 /* WhatsAppClone.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WhatsAppClone.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E9BDE6112C128CB200B5AC40 /* WhatsAppCloneApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WhatsAppCloneApp.swift; sourceTree = "<group>"; };
@@ -374,6 +376,7 @@
 				E9EEF1342C39564A0084304A /* BubbleView.swift */,
 				E93498422C55D05D0034B0DF /* ReactionPickerView.swift */,
 				E93498442C56664A0034B0DF /* MessageMenuView.swift */,
+				E95F273A2C7A071D00ACE42E /* MessageReactionView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -627,6 +630,7 @@
 				E9BDE6472C141BB600B5AC40 /* MessageListController.swift in Sources */,
 				E9BDE6452C14134500B5AC40 /* TextInputArea.swift in Sources */,
 				E95206282C21508A006B4F03 /* URL+Extensions.swift in Sources */,
+				E95F273B2C7A071D00ACE42E /* MessageReactionView.swift in Sources */,
 				E9BDE69D2C1AA7D500B5AC40 /* String+Extensions.swift in Sources */,
 				E9BDE6502C144BF100B5AC40 /* BubbleTailView.swift in Sources */,
 				E95206342C23D892006B4F03 /* UIWindowScene+Extensions.swift in Sources */,

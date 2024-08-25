@@ -74,6 +74,10 @@ struct BubbleAudioView: View {
         .frame(maxWidth: .infinity, alignment: item.alignment)
         .padding(.leading, item.leadingPadding)
         .padding(.trailing, item.trailingPadding)
+        .overlay(alignment: item.reactionAnchor) {
+            MessageReactionView(message: item)
+                .offset(x: item.showGroupParticipantInfo ? 50 : 0, y: 10)
+        }
         .onReceive(voiceMessagePlayer.$playbackState) { state in
            observePlayerState(state)
         }
@@ -137,6 +141,7 @@ extension BubbleAudioView {
         BubbleAudioView(item: .receivedPlaceholder)
         BubbleAudioView(item: .sentPlaceholder)
     }
+    .environmentObject(VoiceMessagePlayer())
     .frame(maxWidth: .infinity)
     .padding(.horizontal)
     .background(Color.gray.opacity(0.4))
