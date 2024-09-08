@@ -199,7 +199,7 @@ struct MessageService {
                 .child(message.id)
                 .child(.userReactions)
                 .child(currentUser.uid)
-                .child(reaction.emoji)
+                .setValue(reaction.emoji)
             
             completion(emojiCount)
         }
