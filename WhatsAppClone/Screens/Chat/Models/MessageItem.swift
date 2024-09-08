@@ -94,6 +94,16 @@ struct MessageItem: Identifiable {
         return !reactions.isEmpty
     }
     
+    var currentUserHasReacted: Bool {
+        guard let currentUid = Auth.auth().currentUser?.uid else { return false }
+        return userReactions.contains { $0.key == currentUid }
+    }
+    
+    var currentUserReaction: String? {
+        guard let currentUid = Auth.auth().currentUser?.uid else { return nil }
+        return userReactions[currentUid]
+    }
+    
     func containsSameOwner(as message: MessageItem) -> Bool {
         if let userA = message.sender, let userB = self.sender {
             return userA == userB

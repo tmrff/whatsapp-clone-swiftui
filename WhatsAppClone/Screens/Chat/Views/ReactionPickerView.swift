@@ -90,6 +90,16 @@ struct ReactionPickerView: View {
         } else {
             Text(item.reaction.emoji)
                 .font(.system(size: 30))
+                .background(selectedEmojiIndicator(item.reaction))
+        }
+    }
+    
+    @ViewBuilder
+    private func selectedEmojiIndicator(_ reaction: Reaction) -> some View {
+        if message.currentUserHasReacted, let currentUserReaction = message.currentUserReaction, currentUserReaction == reaction.emoji {
+            Color(.systemGray5)
+                .frame(width: 45, height: 45)
+                .clipShape(Circle())
         }
     }
     
