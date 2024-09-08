@@ -225,6 +225,8 @@ extension MessageListController {
 
         guard let selectedCell = messagesCollectionView.cellForItem(at: indexPath) else { return }
         
+        Haptic.impact(.medium)
+        
         startingFrame = selectedCell.superview?.convert(selectedCell.frame, to: nil)
         guard let snapshotCell = selectedCell.snapshotView(afterScreenUpdates: false) else { return }
         
