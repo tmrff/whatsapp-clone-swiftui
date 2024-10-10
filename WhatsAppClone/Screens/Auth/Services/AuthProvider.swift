@@ -115,6 +115,7 @@ extension AuthManager {
             let loggedInUser = UserItem(dictionary: userDict)
             self?.authState.send(.loggedIn(loggedInUser))
             print("🔐 \(loggedInUser.username) is logged in")
+            print("🔐 \(loggedInUser.username)'s fcm token is \(loggedInUser.fcmToken)")
         } withCancel: { error in
             print("Failed to get current user info")
         }
