@@ -47,6 +47,7 @@ extension AppDelegate: UNUserNotificationCenterDelegate, MessagingDelegate {
     }
   
     func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
+        Messaging.messaging().apnsToken = deviceToken
         print("APNS successfully registered with device token: \(deviceToken)")
     }
   
