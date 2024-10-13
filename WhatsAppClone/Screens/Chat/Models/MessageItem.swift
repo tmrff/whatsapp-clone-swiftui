@@ -153,4 +153,6 @@ extension String {
     static let audioDuration = "audioDuration"
     static let reactions = "reactions"
     static let userReactions = "userReactions"
+    static let channelNameAtSend = "channelNameAtSend"
+    static let chatParticipantFCMTokens = "chatParticipantFCMTokens"
 }
