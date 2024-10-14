@@ -18,12 +18,23 @@ exports.sendNotificationsForMessages = functions.database
 .ref(channelMessageRef)
 .onCreate(async (snapshot, context) => {
     const data = snapshot.val()
-    const message = data.text
+    const textMessage = data.text
     const senderName = data.channelNameAtSend
     const chatParticipantFCMTokens = data.chatParticipantFCMTokens
+    const messageType = data.type
     
+    let notificationMessage = textMessage
+    
+    if (messageType === "photo") {
+        notificationMessage = "Send a Photo Message"
+    } else if (messageType === "video") {
+        notificationMessage = "Send a Video Message"
+    } else if (messageType === "audio") {
+        notificationMessage = "Send a Voice Message"
+    }
+
     for (const fcmToken of chatParticipantFCMTokens) {
-        await sendPushNotification(message, senderName, fcmToken)
+        await sendPushNotification(notificationMessage, senderName, fcmToken)
     }
 })
 
