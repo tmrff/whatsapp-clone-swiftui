@@ -144,4 +144,5 @@ extension String {
     static let members = "members"
     static let createdBy = "createdBy"
     static let lastMessageType = "lastMessageType"
+    static let notificationMessage = "notificationMessage"
 }

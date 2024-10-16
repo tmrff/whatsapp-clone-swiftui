@@ -33,6 +33,16 @@ exports.sendNotificationsForMessages = functions.database
     }
 })
 
+exports.sendMessageReactionNotification = functions.https.onCall(
+    (async (data, context) => {
+        const fcmToken = data.fcmToken
+        const channelNameAtSend = data.channelNameAtSend
+        const notificationMessage = data.notificationMessage
+        
+        await sendPushNotification(notificationMessage, channelNameAtSend, fcmToken)
+    }
+))
+
 // Send push notification from cloud functions using apns
 async function sendPushNotification(message, senderName, fcmToken) {
 	const payload = {
