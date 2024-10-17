@@ -37,7 +37,7 @@ struct MessageService {
         
         FirebaseConstants.ChannelsRef.child(channel.id).updateChildValues(channelDict)
         FirebaseConstants.MessagesRef.child(channel.id).child(messageId).setValue(messageDict)
-        
+        increaseUnreadCountForMembers(in: channel)
        onComplete()
     }
     
@@ -74,6 +74,7 @@ struct MessageService {
         
         FirebaseConstants.ChannelsRef.child(channel.id).updateChildValues(channelDict)
         FirebaseConstants.MessagesRef.child(channel.id).child(messageId).setValue(messageDict)
+        increaseUnreadCountForMembers(in: channel)
         completion()
         
     }
@@ -241,6 +242,19 @@ struct MessageService {
                 print("Failed to sendReactionNotification: \(error.localizedDescription)")
             }
         }
+    }
+    
+    static func increaseUnreadCountForMembers(in channel: ChannelItem) {
+        let membersUids = channel.membersExludingMe.map { $0.uid }
+        for uid in membersUids {
+            let channelUnReadCountRef = FirebaseConstants.UserChannelsRef.child(uid).child(channel.id)
+            increaseCountViaTransaction(at: channelUnReadCountRef)
+        }
+    }
+    
+    static func resetUnreadCountForMember(in channel: ChannelItem) {
+        guard let currentUid = Auth.auth().currentUser?.uid else { return }
+        FirebaseConstants.UserChannelsRef.child(currentUid).child(channel.id).setValue(0)
     }
 }
 
