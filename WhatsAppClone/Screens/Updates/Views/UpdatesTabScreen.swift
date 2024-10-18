@@ -10,15 +10,16 @@ import SwiftUI
 struct UpdatesTabScreen: View {
     
     @State private var searchText = ""
+    let currentUser: UserItem
     
     var body: some View {
         NavigationStack {
             List {
                 StatusSectionHeader()
                     .listRowBackground(Color.clear)
-                StatusSection()
+                StatusSection(currentUser: currentUser)
                 Section {
-                    RecentUpdatesItemView()
+                    RecentUpdatesItemView(currentUser: currentUser)
                 } header: {
                     Text("Recent Updates")
                 }
@@ -87,10 +88,10 @@ private struct StatusSectionHeader: View {
 }
 
 private struct StatusSection: View {
+    let currentUser: UserItem
     var body: some View {
         HStack {
-            Circle()
-                .frame(width: UpdatesTabScreen.Constant.imageDimen, height: UpdatesTabScreen.Constant.imageDimen)
+            CircularProfileImageView(currentUser.profileImageURL, size: .custom(55))
             VStack(alignment: .leading) {
                 Text("My Status")
                     .font(.callout)
@@ -132,13 +133,13 @@ private struct StatusSection: View {
 }
 
 private struct RecentUpdatesItemView: View {
+    let currentUser: UserItem
     var body: some View {
         HStack {
-            Circle()
-                .frame(width: UpdatesTabScreen.Constant.imageDimen, height: UpdatesTabScreen.Constant.imageDimen)
+            CircularProfileImageView(currentUser.profileImageURL, size: .custom(55))
             
             VStack(alignment: .leading) {
-                Text("Joseph Smith")
+                Text(currentUser.username)
                     .font(.callout)
                 Text("1hr ago")
                     .foregroundStyle(.gray)
@@ -202,5 +203,5 @@ private struct SuggestedChannelItemView: View {
 }
 
 #Preview {
-    UpdatesTabScreen()
+    UpdatesTabScreen(currentUser: .placeholder)
 }
