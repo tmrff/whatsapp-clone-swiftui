@@ -159,8 +159,9 @@ private struct ChannelListView: View {
             
             ScrollView(.horizontal, showsIndicators: false) {
                 HStack {
-                    ForEach(0..<5) { _ in
-                        SuggestedChannelItemView()
+                    ForEach(PublicChannelItem.placeholders) { channel in
+                        SuggestedChannelItemView(channel: channel)
+                            .frame(width: 150)
                     }
                 }
             }
@@ -176,11 +177,13 @@ private struct ChannelListView: View {
 }
 
 private struct SuggestedChannelItemView: View {
+    let channel: PublicChannelItem
     var body: some View {
         VStack {
-            Circle()
-                .frame(width: UpdatesTabScreen.Constant.imageDimen, height: UpdatesTabScreen.Constant.imageDimen)
-            Text("Real Madrid C.F")
+            CircularProfileImageView(channel.imageUrl, size: .custom(55))
+            Text(channel.title)
+                .lineLimit(1)
+                .bold()
             
             Button {
                 
