@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		7803DE8E2CD37327008BB018 /* StreamVideo in Frameworks */ = {isa = PBXBuildFile; productRef = 7803DE8D2CD37327008BB018 /* StreamVideo */; };
+		7803DE902CD37327008BB018 /* StreamVideoSwiftUI in Frameworks */ = {isa = PBXBuildFile; productRef = 7803DE8F2CD37327008BB018 /* StreamVideoSwiftUI */; };
 		E92F077F2CBE4BB700CB1E62 /* FirebaseFunctions in Frameworks */ = {isa = PBXBuildFile; productRef = E92F077E2CBE4BB700CB1E62 /* FirebaseFunctions */; };
 		E92F07822CC241F300CB1E62 /* PublicChannelItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = E92F07812CC241F300CB1E62 /* PublicChannelItem.swift */; };
 		E93498432C55D05D0034B0DF /* ReactionPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E93498422C55D05D0034B0DF /* ReactionPickerView.swift */; };
@@ -167,6 +169,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7803DE8E2CD37327008BB018 /* StreamVideo in Frameworks */,
 				E95206192C2061E7006B4F03 /* Kingfisher in Frameworks */,
 				E9BDE6602C1570D800B5AC40 /* FirebaseMessaging in Frameworks */,
 				E9DE56862C50AA140020D0AF /* AlertKit in Frameworks */,
@@ -174,6 +177,7 @@
 				E9BDE65E2C1570D800B5AC40 /* FirebaseDatabaseSwift in Frameworks */,
 				E9BDE65C2C1570D800B5AC40 /* FirebaseDatabase in Frameworks */,
 				E9BDE6622C1570D800B5AC40 /* FirebaseStorage in Frameworks */,
+				7803DE902CD37327008BB018 /* StreamVideoSwiftUI in Frameworks */,
 				E9BDE65A2C1570D800B5AC40 /* FirebaseAuth in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -573,6 +577,8 @@
 				E95206182C2061E7006B4F03 /* Kingfisher */,
 				E9DE56852C50AA140020D0AF /* AlertKit */,
 				E92F077E2CBE4BB700CB1E62 /* FirebaseFunctions */,
+				7803DE8D2CD37327008BB018 /* StreamVideo */,
+				7803DE8F2CD37327008BB018 /* StreamVideoSwiftUI */,
 			);
 			productName = WhatsAppClone;
 			productReference = E9BDE60E2C128CB200B5AC40 /* WhatsAppClone.app */;
@@ -606,6 +612,7 @@
 				E9BDE6582C1570D800B5AC40 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 				E95206172C2061E7006B4F03 /* XCRemoteSwiftPackageReference "Kingfisher" */,
 				E9DE56842C50AA130020D0AF /* XCRemoteSwiftPackageReference "AlertKit" */,
+				7803DE8C2CD37327008BB018 /* XCRemoteSwiftPackageReference "stream-video-swift" */,
 			);
 			productRefGroup = E9BDE60F2C128CB200B5AC40 /* Products */;
 			projectDirPath = "";
@@ -913,6 +920,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		7803DE8C2CD37327008BB018 /* XCRemoteSwiftPackageReference "stream-video-swift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/GetStream/stream-video-swift";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.13.0;
+			};
+		};
 		E95206172C2061E7006B4F03 /* XCRemoteSwiftPackageReference "Kingfisher" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "git@github.com:onevcat/Kingfisher.git";
@@ -940,6 +955,16 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		7803DE8D2CD37327008BB018 /* StreamVideo */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 7803DE8C2CD37327008BB018 /* XCRemoteSwiftPackageReference "stream-video-swift" */;
+			productName = StreamVideo;
+		};
+		7803DE8F2CD37327008BB018 /* StreamVideoSwiftUI */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 7803DE8C2CD37327008BB018 /* XCRemoteSwiftPackageReference "stream-video-swift" */;
+			productName = StreamVideoSwiftUI;
+		};
 		E92F077E2CBE4BB700CB1E62 /* FirebaseFunctions */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = E9BDE6582C1570D800B5AC40 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
