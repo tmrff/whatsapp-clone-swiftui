@@ -9,6 +9,7 @@ import Foundation
 import Combine
 import FirebaseAuth
 import FirebaseDatabase
+import StreamVideo
 
 enum AuthState {
     case pending, loggedIn(UserItem), loggedOut
@@ -51,6 +52,8 @@ final class AuthManager: AuthProvider {
     static var shared: AuthProvider = AuthManager()
     
     var authState = CurrentValueSubject<AuthState, Never>(.pending)
+    
+    @Published var streamVideo: StreamVideo?
     
     func autoLogin() async {
         if Auth.auth().currentUser == nil {
@@ -119,6 +122,16 @@ extension AuthManager {
         } withCancel: { error in
             print("Failed to get current user info")
         }
+    }
+}
+
+extension AuthManager {
+    private func setUpStreamVideo(for currentUser: UserItem) {
+        let apiKey = "mmhfdzb5evj2"
+        let user = User(id: "Grand_Moff_Tarkin", name: "Tarkin")
+        let token = UserToken(rawValue: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJodHRwczovL3Byb250by5nZXRzdHJlYW0uaW8iLCJzdWIiOiJ1c2VyL0dyYW5kX01vZmZfVGFya2luIiwidXNlcl9pZCI6IkdyYW5kX01vZmZfVGFya2luIiwidmFsaWRpdHlfaW5fc2Vjb25kcyI6NjA0ODAwLCJpYXQiOjE3MzA2MjQwNDUsImV4cCI6MTczMTIyODg0NX0.WaQqh76dzWFU7Vh6vyQu99g3ONAVcqv5VPdYYuWbstM")
+        streamVideo = StreamVideo(apiKey: apiKey, user: user, token: token)
+        print("🔐 Stream Video SDK SetUp Completed with user token: \(token)")
     }
 }
 
