@@ -59,14 +59,18 @@ final class AuthManager: AuthProvider {
         if Auth.auth().currentUser == nil {
             authState.send(.loggedOut)
         } else {
-           fetchCurrentUserInfo()
+            fetchCurrentUserInfo { [weak self] currentUser in
+                self?.setUp(currentUser)
+            }
         }
     }
     
     func login(with email: String, and password: String) async throws {
         do {
             let authResult = try await Auth.auth().signIn(withEmail: email, password: password)
-            fetchCurrentUserInfo()
+            fetchCurrentUserInfo { [weak self] currentUser in
+                self?.setUp(currentUser)
+            }
             print("🔐 Successfully Sign In : \(authResult.user.email ?? "") ")
         } catch {
             print("🔐 Failed to Sign Into the Account with: \(email)")
@@ -80,7 +84,7 @@ final class AuthManager: AuthProvider {
             let uid = authResult.user.uid
             let newUser = UserItem(uid: uid, username: username, email: email)
             try await saveUserInfoToDatabase(user: newUser)
-            self.authState.send(.loggedIn(newUser))
+            setUp(newUser)
         } catch {
             print("🔐 Failed to Create an Account: \(error.localizedDescription)")
             throw AuthError.accountCreationFailed(error.localizedDescription)
@@ -110,18 +114,23 @@ extension AuthManager {
         }
     }
     
-    private func fetchCurrentUserInfo() {
+    private func fetchCurrentUserInfo(completion: @escaping(UserItem) -> Void) {
         guard let currentUid = Auth.auth().currentUser?.uid else { return }
-        FirebaseConstants.UserRef.child(currentUid).observeSingleEvent(of: .value) { [weak self] snapshot in
+        FirebaseConstants.UserRef.child(currentUid).observeSingleEvent(of: .value) { snapshot in
             
             guard let userDict = snapshot.value as? [String: Any] else { return }
             let loggedInUser = UserItem(dictionary: userDict)
-            self?.authState.send(.loggedIn(loggedInUser))
+            completion(loggedInUser)
             print("🔐 \(loggedInUser.username) is logged in")
             print("🔐 \(loggedInUser.username)'s fcm token is \(loggedInUser.fcmToken)")
         } withCancel: { error in
             print("Failed to get current user info")
         }
+    }
+    
+    private func setUp(_ currentUser: UserItem) {
+        setUpStreamVideo(for: currentUser)
+        authState.send(.loggedIn(currentUser))
     }
 }
 
