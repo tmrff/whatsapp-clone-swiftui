@@ -93,3 +93,11 @@ export const createStreamUser = functions.auth.user()
     logger.log("Stream user was created", response);
     return response;
 });
+
+export const deleteStreamUser = functions.auth.user()
+.onDelete(async(user) => {
+    logger.log("Firebase user was deleted", user);
+    const response = await streamClient.deleteUser(user.uid);
+    logger.log("Stream user was deleted", response);
+    return response;
+});
