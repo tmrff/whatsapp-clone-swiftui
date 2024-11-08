@@ -1,6 +1,9 @@
+require("dotenv").config
 const functions = require('firebase-functions/v1');
 
 const admin = require("firebase-admin");
+
+const { StreamChat } = require("stream-chat")
 
 admin.initializeApp();
 
@@ -70,3 +73,9 @@ async function sendPushNotification(message, senderName, fcmToken) {
 		console.error("Error sending message: ", error)
 	}
 }
+
+// Stream Client
+
+const apiKey = process.env.API_KEY;
+const apiSecret = process.env.API_SECRET;
+const streamClient = StreamChat.getInstance(apiKey, apiSecret);
