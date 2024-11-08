@@ -79,3 +79,17 @@ async function sendPushNotification(message, senderName, fcmToken) {
 const apiKey = process.env.API_KEY;
 const apiSecret = process.env.API_SECRET;
 const streamClient = StreamChat.getInstance(apiKey, apiSecret);
+
+export const createStreamUser = functions.auth.user()
+.onCreate(async(user) => {
+    logger.log("Firebase user was created", user);
+    const response = await streamClient.upsertUser({
+        id: user.uid,
+        name: user.displayName,
+        email: user.email,
+        image: user.photoURL
+    })
+    
+    logger.log("Stream user was created", response);
+    return response;
+});
