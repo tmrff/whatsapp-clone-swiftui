@@ -101,3 +101,16 @@ export const deleteStreamUser = functions.auth.user()
     logger.log("Stream user was deleted", response);
     return response;
 });
+
+export const getStreamUserToken = functions.https.onCall((data, context) => {
+    if (!context.auth) {
+        throw new functions.https.HttpsError("unauthenticated", "The function must be called while authenticated");
+    } else {
+        try {
+            return streamClient.createToken(context.auth.uid, undefined, Math.floor(new Date().getTime() / 1000));
+        } catch (err) {
+            console.error(`Unable to get user token with ID ${context.auth.uid} on Stream. Error ${err}`);
+            throw new functions.https.HttpsError("internal", "Could not get Stream user token");
+        }
+    }
+});
