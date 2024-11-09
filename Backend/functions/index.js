@@ -80,7 +80,7 @@ const apiKey = process.env.API_KEY;
 const apiSecret = process.env.API_SECRET;
 const streamClient = StreamChat.getInstance(apiKey, apiSecret);
 
-export const createStreamUser = functions.auth.user()
+exports.createStreamUser = functions.auth.user()
 .onCreate(async(user) => {
     logger.log("Firebase user was created", user);
     const response = await streamClient.upsertUser({
@@ -94,7 +94,7 @@ export const createStreamUser = functions.auth.user()
     return response;
 });
 
-export const deleteStreamUser = functions.auth.user()
+exports.deleteStreamUser = functions.auth.user()
 .onDelete(async(user) => {
     logger.log("Firebase user was deleted", user);
     const response = await streamClient.deleteUser(user.uid);
@@ -102,7 +102,7 @@ export const deleteStreamUser = functions.auth.user()
     return response;
 });
 
-export const getStreamUserToken = functions.https.onCall((data, context) => {
+exports.getStreamUserToken = functions.https.onCall((data, context) => {
     if (!context.auth) {
         throw new functions.https.HttpsError("unauthenticated", "The function must be called while authenticated");
     } else {
@@ -115,7 +115,7 @@ export const getStreamUserToken = functions.https.onCall((data, context) => {
     }
 });
 
-export const revokeStreamUserToken = functions.https.onCall((data, context) => {
+exports.revokeStreamUserToken = functions.https.onCall((data, context) => {
     if (!context.auth) {
         throw new functions.https.HttpsError("unauthenticated", "The function must be called while authenticated");
     } else {
