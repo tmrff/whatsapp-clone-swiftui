@@ -114,3 +114,16 @@ export const getStreamUserToken = functions.https.onCall((data, context) => {
         }
     }
 });
+
+export const revokeStreamUserToken = functions.https.onCall((data, context) => {
+    if (!context.auth) {
+        throw new functions.https.HttpsError("unauthenticated", "The function must be called while authenticated");
+    } else {
+        try {
+            return streamClient.revokeStreamUserToken(context.auth.uid)
+        } catch (err) {
+            console.error(`Unable to revoke user token with ID ${context.auth.uid} on Stream. Error ${err}`);
+            throw new functions.https.HttpsError("internal", "Could not revoke Stream user token");
+        }
+    }
+});
