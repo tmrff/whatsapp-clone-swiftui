@@ -136,11 +136,16 @@ extension AuthManager {
 
 extension AuthManager {
     private func setUpStreamVideo(for currentUser: UserItem) {
-        let apiKey = "mmhfdzb5evj2"
-        let user = User(id: "Grand_Moff_Tarkin", name: "Tarkin")
-        let token = UserToken(rawValue: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJodHRwczovL3Byb250by5nZXRzdHJlYW0uaW8iLCJzdWIiOiJ1c2VyL0dyYW5kX01vZmZfVGFya2luIiwidXNlcl9pZCI6IkdyYW5kX01vZmZfVGFya2luIiwidmFsaWRpdHlfaW5fc2Vjb25kcyI6NjA0ODAwLCJpYXQiOjE3MzA2MjQwNDUsImV4cCI6MTczMTIyODg0NX0.WaQqh76dzWFU7Vh6vyQu99g3ONAVcqv5VPdYYuWbstM")
-        streamVideo = StreamVideo(apiKey: apiKey, user: user, token: token)
-        print("🔐 Stream Video SDK SetUp Completed with user token: \(token)")
+        // Video calling requires a Stream API key plus a per-user token. Tokens must be minted
+        // server-side with the Stream API *secret*, so they are never hardcoded here. The backend
+        // already exposes a `getStreamUserToken` callable Cloud Function
+        // (see Backend/functions/index.js) for this purpose.
+        //
+        // TODO: read your Stream API key from configuration, fetch a token via the
+        // `getStreamUserToken` Cloud Function, then initialise
+        // `streamVideo = StreamVideo(apiKey:user:token:)`. Until that is wired up, video calling
+        // is disabled while the rest of the app (chat, media, groups) works normally.
+        streamVideo = nil
     }
 }
 
